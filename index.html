@@ -43,6 +43,7 @@
 </section>
 
 
+
 <section id="bookFlight" class="about-us">
     <div class="about-content">
         <h2>Book a Flight</h2>
@@ -57,6 +58,48 @@
         </div>
 
         <form id="bookingForm">
+            <div class="form-group">
+                <label>Flight Date *</label>
+                <input type="date" name="date" required min="2026-01-01">
+            </div>
+
+            <div class="form-group">
+                <label>Select Route (From Singapore) *</label>
+                <select name="route" required>
+                    <option value="">-- Select a destination --</option>
+                    <option value="Incheon (Seoul) - SQ612">Incheon (Seoul) - SQ612</option>
+                    <option value="Barcelona - SQ378">Barcelona - SQ378</option>
+                    <option value="San Francisco - SQ32">San Francisco - SQ32</option>
+                    <option value="Hyderabad - SQ522">Hyderabad - SQ522</option>
+                    <option value="Dubai - SQ494">Dubai - SQ494</option>
+                    <option value="Jakarta - SQ950">Jakarta - SQ950</option>
+                    <option value="Adelaide - SQ277">Adelaide - SQ277</option>
+                    <option value="Sydney - SQ211">Sydney - SQ211</option>
+                    <option value="Amsterdam - SQ324">Amsterdam - SQ324</option>
+                    <option value="Newark - SQ22">Newark - SQ22</option>
+                    <option value="Munich - SQ328">Munich - SQ328</option>
+                    <option value="Istanbul - SQ392">Istanbul - SQ392</option>
+                    <option value="Manchester - SQ302">Manchester - SQ302</option>
+                    <option value="Colombo - SQ468">Colombo - SQ468</option>
+                    <option value="Cape Town - SQ478 (via Johannesburg/Larnaca)">Cape Town - SQ478 (via Johannesburg/Larnaca)</option>
+                    <option value="Mumbai - SQ424">Mumbai - SQ424</option>
+                    <option value="Beijing (Capital) - SQ802">Beijing (Capital) - SQ802</option>
+                    <option value="Tokyo Narita - SQ12">Tokyo Narita - SQ12</option>
+                    <option value="Seoul Gimpo - SQ132">Seoul Gimpo - SQ132</option>
+                    <option value="Brisbane - SQ235">Brisbane - SQ235</option>
+                    <option value="Melbourne - SQ207">Melbourne - SQ207</option>
+                    <option value="London Heathrow - SQ306">London Heathrow - SQ306</option>
+                    <option value="Frankfurt - SQ26">Frankfurt - SQ26</option>
+                    <option value="Seattle - SQ28">Seattle - SQ28</option>
+                    <option value="Ahmedabad - SQ504">Ahmedabad - SQ504</option>
+                    <option value="Dhaka - SQ446">Dhaka - SQ446</option>
+                    <option value="Chennai - SQ528">Chennai - SQ528</option>
+                    <option value="Denpasar (Bali) - SQ938">Denpasar (Bali) - SQ938</option>
+                    <option value="Tokyo Haneda - SQ634">Tokyo Haneda - SQ634</option>
+                    <option value="New York (JFK) - SQ24">New York (JFK) - SQ24</option>
+                </select>
+            </div>
+
             <div class="form-group">
                 <label>Roblox Username *</label>
                 <input type="text" name="roblox" required placeholder="YourRobloxUsername">
@@ -76,6 +119,8 @@
         </form>
     </div>
 </section>
+        
+
 
 
 <section id="aboutUs" class="about-us">
