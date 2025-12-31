@@ -82,29 +82,46 @@ if (form && successMsg && errorMsg) {
         errorMsg.style.display = 'none';
         
         const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+        const roblox = formData.get('roblox');
+        const discord = formData.get('discord');
+        const notes = formData.get('notes') || 'No additional notes';
+        
+        const timestamp = new Date().toLocaleString('en-IN', { 
+            timeZone: 'Asia/Kolkata',
+            dateStyle: 'medium',
+            timeStyle: 'short'
+        });
         
         try {
-            const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwYx9_mM0QW4FRjOF2kmH0zGGErALJfC2j8RHMvTj9O3iwwD-kFoDJ2njQ2nk7FA8Y3qw/exec', {
                 method: 'POST',
+                mode: 'no-cors',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify({
+                    timestamp: timestamp,
+                    roblox: roblox,
+                    discord: discord,
+                    notes: notes
+                })
             });
             
-            if (response.ok) {
-                successMsg.style.display = 'block';
-                form.reset();
-                setTimeout(() => {
-                    successMsg.style.display = 'none';
-                }, 5000);
-            } else {
-                throw new Error('Submission failed');
-            }
+            successMsg.style.display = 'block';
+            successMsg.textContent = '✓ Booking submitted successfully! We\'ll contact you soon on Discord.';
+            form.reset();
+            
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 5000);
+            
         } catch (error) {
             errorMsg.style.display = 'block';
+            errorMsg.textContent = '✗ Error submitting booking. Please contact us on Discord.';
             console.error('Error:', error);
+            setTimeout(() => {
+                errorMsg.style.display = 'none';
+            }, 5000);
         } finally {
             submitBtn.disabled = false;
             submitBtn.textContent = 'Submit Booking';
