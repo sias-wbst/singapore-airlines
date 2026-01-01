@@ -78,7 +78,7 @@ if (homeLink && home) {
     });
 }
 
-// Flight schedule based on day of month
+
 const flightSchedule = {
     1: "Incheon (Seoul) - SQ612",
     2: "Barcelona - SQ378",
@@ -112,7 +112,7 @@ const flightSchedule = {
     31: "New York (JFK) - SQ24"
 };
 
-// Auto-fill flight based on selected date
+
 const flightDateInput = document.getElementById('flightDate');
 const flightRouteInput = document.getElementById('flightRoute');
 
@@ -120,9 +120,9 @@ if (flightDateInput && flightRouteInput) {
     flightDateInput.addEventListener('change', (e) => {
         const selectedDate = new Date(e.target.value);
         const dayOfMonth = selectedDate.getDate();
-        
+
         const flight = flightSchedule[dayOfMonth];
-        
+
         if (flight) {
             flightRouteInput.value = flight;
         } else {
@@ -131,7 +131,7 @@ if (flightDateInput && flightRouteInput) {
     });
 }
 
-// Google Sheets form submission
+
 const form = document.getElementById('bookingForm');
 const successMsg = document.getElementById('successMessage');
 const errorMsg = document.getElementById('errorMessage');
@@ -139,22 +139,38 @@ const errorMsg = document.getElementById('errorMessage');
 if (form && successMsg && errorMsg) {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const submitBtn = form.querySelector('.submit-btn');
         submitBtn.disabled = true;
         submitBtn.textContent = 'Submitting...';
-        
+
         successMsg.style.display = 'none';
         errorMsg.style.display = 'none';
-        
+
         const formData = new FormData(form);
         const date = formData.get('date');
         const route = formData.get('route');
         const roblox = formData.get('roblox');
         const discord = formData.get('discord');
         const notes = formData.get('notes') || 'No additional notes';
+
         
-        // Check if flight is available
+        const bookingKey = `bookings_${date}`;
+        const currentCount = Number(localStorage.getItem(bookingKey)) || 0;
+
+        if (currentCount >= 2) {
+            errorMsg.style.display = 'block';
+            errorMsg.textContent = '✗ Maximum of 2 flights can be booked for this date.';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Booking';
+
+            setTimeout(() => {
+                errorMsg.style.display = 'none';
+            }, 5000);
+            return;
+        }
+
+        
         if (route === "No flight scheduled for this date") {
             errorMsg.style.display = 'block';
             errorMsg.textContent = '✗ No flight available on the selected date. Please choose another date.';
@@ -165,44 +181,46 @@ if (form && successMsg && errorMsg) {
             }, 5000);
             return;
         }
-        
-        const timestamp = new Date().toLocaleString('en-IN', { 
+
+        const timestamp = new Date().toLocaleString('en-IN', {
             timeZone: 'Asia/Kolkata',
             dateStyle: 'medium',
             timeStyle: 'short'
         });
-        
+
         try {
-            const response = await fetch('https://script.google.com/macros/s/AKfycbwYx9_mM0QW4FRjOF2kmH0zGGErALJfC2j8RHMvTj9O3iwwD-kFoDJ2njQ2nk7FA8Y3qw/exec', {
+            await fetch('https://script.google.com/macros/s/AKfycbwYx9_mM0QW4FRjOF2kmH0zGGErALJfC2j8RHMvTj9O3iwwD-kFoDJ2njQ2nk7FA8Y3qw/exec', {
                 method: 'POST',
                 mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    timestamp: timestamp,
-                    date: date,
-                    route: route,
-                    roblox: roblox,
-                    discord: discord,
-                    notes: notes
+                    timestamp,
+                    date,
+                    route,
+                    roblox,
+                    discord,
+                    notes
                 })
             });
-            
+
             successMsg.style.display = 'block';
             successMsg.textContent = '✓ Booking submitted successfully! We\'ll contact you soon on Discord.';
+
+            
+            localStorage.setItem(bookingKey, currentCount + 1);
+
             form.reset();
             flightRouteInput.value = '';
             flightRouteInput.placeholder = 'Select a date first';
-            
+
             setTimeout(() => {
                 successMsg.style.display = 'none';
             }, 5000);
-            
+
         } catch (error) {
             errorMsg.style.display = 'block';
             errorMsg.textContent = '✗ Error submitting booking. Please contact us on Discord.';
-            console.error('Error:', error);
+            console.error(error);
             setTimeout(() => {
                 errorMsg.style.display = 'none';
             }, 5000);
