@@ -80,12 +80,12 @@ if (homeLink && home) {
 
 // Flight schedule based on day of month
 const flightSchedule = {
-    // 1: "Incheon (Seoul) - SQ612",
-    // 2: "Barcelona - SQ378",
-    // 3: "San Francisco - SQ32",
-    // 4: "Hyderabad - SQ522",
-    // 5: "Dubai - SQ494",
-    // 6: "Jakarta - SQ950",
+    1: "Incheon (Seoul) - SQ612",
+    2: "Barcelona - SQ378",
+    3: "San Francisco - SQ32",
+    4: "Hyderabad - SQ522",
+    5: "Dubai - SQ494",
+    6: "Jakarta - SQ950",
     7: "Adelaide - SQ277",
     8: "Sydney - SQ211",
     9: "Amsterdam - SQ324",
