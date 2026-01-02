@@ -12,70 +12,70 @@ const aboutUs = document.getElementById("aboutUs");
 const bookFlight = document.getElementById("bookFlight");
 
 if (joinBtn) {
-joinBtn.addEventListener("click", () => {
-window.open("https://discord.gg/KpucdrfdD3", "_blank");
-});
+    joinBtn.addEventListener("click", () => {
+        window.open("https://discord.gg/KpucdrfdD3", "_blank");
+    });
 }
 
 function closeAll() {
-[events, ourStaff, aboutUs, bookFlight].forEach(sec => {
-if (sec) {
-sec.classList.remove("open");
-sec.style.maxHeight = null;
-}
-});
+    [events, ourStaff, aboutUs, bookFlight].forEach(sec => {
+        if (sec) {
+            sec.classList.remove("open");
+            sec.style.maxHeight = null;
+        }
+    });
 }
 
 if (staffLink && ourStaff) {
-staffLink.addEventListener("click", e => {
-e.preventDefault();
-closeAll();
-ourStaff.classList.add("open");
-setTimeout(() => {
-ourStaff.scrollIntoView({ behavior: "smooth" });
-}, 100);
-});
+    staffLink.addEventListener("click", e => {
+        e.preventDefault();
+        closeAll();
+        ourStaff.classList.add("open");
+        setTimeout(() => {
+            ourStaff.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+    });
 }
 
 if (eventsLink && events) {
-eventsLink.addEventListener("click", e => {
-e.preventDefault();
-closeAll();
-events.classList.add("open");
-setTimeout(() => {
-events.scrollIntoView({ behavior: "smooth" });
-}, 100);
-});
+    eventsLink.addEventListener("click", e => {
+        e.preventDefault();
+        closeAll();
+        events.classList.add("open");
+        setTimeout(() => {
+            events.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+    });
 }
 
 if (aboutLink && aboutUs) {
-aboutLink.addEventListener("click", e => {
-e.preventDefault();
-closeAll();
-aboutUs.classList.add("open");
-setTimeout(() => {
-aboutUs.scrollIntoView({ behavior: "smooth" });
-}, 100);
-});
+    aboutLink.addEventListener("click", e => {
+        e.preventDefault();
+        closeAll();
+        aboutUs.classList.add("open");
+        setTimeout(() => {
+            aboutUs.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+    });
 }
 
 if (bookLink && bookFlight) {
-bookLink.addEventListener("click", e => {
-e.preventDefault();
-closeAll();
-bookFlight.classList.add("open");
-setTimeout(() => {
-bookFlight.scrollIntoView({ behavior: "smooth" });
-}, 100);
-});
+    bookLink.addEventListener("click", e => {
+        e.preventDefault();
+        closeAll();
+        bookFlight.classList.add("open");
+        setTimeout(() => {
+            bookFlight.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+    });
 }
 
 if (homeLink && home) {
-homeLink.addEventListener("click", e => {
-e.preventDefault();
-closeAll();
-home.scrollIntoView({ behavior: "smooth" });
-});
+    homeLink.addEventListener("click", e => {
+        e.preventDefault();
+        closeAll();
+        home.scrollIntoView({ behavior: "smooth" });
+    });
 }
 
 const flightSchedule = {
@@ -130,14 +130,14 @@ if (flightDateInput && flightRouteInput) {
     });
 }
 
-
+//cors 
 async function validateRobloxUsername(username) {
     if (!username || username.trim() === '') {
         return { valid: false, message: 'Username cannot be empty' };
     }
 
     try {
-        const response = await fetch(`https://users.roblox.com/v1/usernames/users`, {
+        const response = await fetch(`https://cors-anywhere.herokuapp.com/https://users.roblox.com/v1/usernames/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -160,12 +160,11 @@ async function validateRobloxUsername(username) {
         }
     } catch (error) {
         console.error('Roblox API error:', error);
-        return { valid: false, message: 'Could not verify username' };
+        return { valid: false, message: 'Could not verify username (check console)' };
     }
 }
 
 if (robloxInput) {
-    
     const validationDiv = document.createElement('div');
     validationDiv.id = 'robloxValidation';
     validationDiv.style.fontSize = '0.9em';
@@ -183,10 +182,8 @@ if (robloxInput) {
         validationDiv.style.color = '#666';
         robloxInput.style.borderColor = '#ddd';
 
-       
         clearTimeout(validationTimeout);
 
-        
         validationTimeout = setTimeout(async () => {
             if (username) {
                 const result = await validateRobloxUsername(username);
@@ -208,7 +205,6 @@ if (robloxInput) {
 
     robloxInput.addEventListener('focus', () => {
         if (robloxInput.style.borderColor && robloxInput.style.borderColor !== 'rgb(221, 221, 221)') {
-            
             return;
         }
         robloxInput.style.borderColor = '#003a8f';
@@ -244,7 +240,7 @@ if (form && successMsg && errorMsg) {
 
         console.log('Form Data:', { date, route, roblox, discord, notes });
 
-        // roblux vrfxn
+        
         if (!robloxInput.dataset.valid || robloxInput.dataset.valid === 'false') {
             const validation = await validateRobloxUsername(roblox);
             if (!validation.valid) {
