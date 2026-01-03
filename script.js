@@ -137,7 +137,7 @@ async function validateRobloxUsername(username) {
     }
 
     try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbxiKODHzuruWMdMYG9xWmMZgIl9-PMmrUbndgwQHlAlzlF4r31zqAyb-JpihLhCEtWx-g/exec', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbx3Cjwth2OWL592kOJf4bWmC8TkPFY-0luma-qGuTNYbnYI3jxWofJyaL_t-CarS01K2Q/exec', {
             method: 'POST',
             mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
@@ -231,7 +231,7 @@ if (form && successMsg && errorMsg) {
 
         console.log('Form Data:', { date, route, roblox, discord, notes });
 
-    
+        
         if (!robloxInput.dataset.valid || robloxInput.dataset.valid === 'false') {
             const validation = await validateRobloxUsername(roblox);
             if (!validation.valid) {
